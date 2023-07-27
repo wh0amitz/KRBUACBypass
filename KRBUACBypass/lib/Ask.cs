@@ -343,7 +343,8 @@ namespace KRBUACBypass
             {
                 // request the new service ticket
                 TGS(userName, domain, ticket, clientKey, paEType, sname, requestEType, outfile, ptt, domainController, display, enterprise, roast, opsec, tgs, targetDomain, servicekey, asrepkey, u2u, targetUser, printargs, proxyUrl, keyList);
-                Console.WriteLine();
+                if (KRBUACBypass.Program.Verbose)
+                    Console.WriteLine();
             }
         }
 
@@ -506,29 +507,34 @@ namespace KRBUACBypass
                 if (String.IsNullOrEmpty(servicekey) && u2u)
                     servicekey = Helpers.ByteArrayToString(clientKey);
 
-                if (display)
+                if (KRBUACBypass.Program.Verbose)
                 {
-                    Console.WriteLine("[*] base64(ticket.kirbi):\r\n", kirbiString);
-
-                    if (KRBUACBypass.Program.wrapTickets)
+                    if (display)
                     {
-                        // display the .kirbi base64, columns of 80 chararacters
-                        foreach (string line in Helpers.Split(kirbiString, 80))
+                        Console.WriteLine("[*] base64(ticket.kirbi):\r\n", kirbiString);
+
+                        if (KRBUACBypass.Program.wrapTickets)
                         {
-                            Console.WriteLine("      {0}", line);
+                            // display the .kirbi base64, columns of 80 chararacters
+                            foreach (string line in Helpers.Split(kirbiString, 80))
+                            {
+                                Console.WriteLine("      {0}", line);
+                            }
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("      {0}", kirbiString);
-                    }
+                        else
+                        {
+                            Console.WriteLine("      {0}", kirbiString);
+                        }
 
-                    KRB_CRED kirbi = new KRB_CRED(kirbiBytes);
+                        KRB_CRED kirbi = new KRB_CRED(kirbiBytes);
 
-                    LSA.DisplayTicket(kirbi, 2, false, false, false, false, 
-                        string.IsNullOrEmpty(servicekey) ? null : Helpers.StringToByteArray(servicekey), string.IsNullOrEmpty(asrepkey) ? null : Helpers.StringToByteArray(asrepkey),
-                        null,null,null,string.IsNullOrEmpty(keyListHash) ? null : Helpers.StringToByteArray(keyListHash));
+                        LSA.DisplayTicket(kirbi, 2, false, false, false, false,
+                            string.IsNullOrEmpty(servicekey) ? null : Helpers.StringToByteArray(servicekey), string.IsNullOrEmpty(asrepkey) ? null : Helpers.StringToByteArray(asrepkey),
+                            null, null, null, string.IsNullOrEmpty(keyListHash) ? null : Helpers.StringToByteArray(keyListHash));
+                    }
                 }
+
+                    
 
                 if (!String.IsNullOrEmpty(outfile))
                 {
