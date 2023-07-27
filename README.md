@@ -4,7 +4,7 @@ This POC is inspired by James Forshaw ([@tiraniddo](https://twitter.com/tiranidd
 
 ### Tgtdeleg Trick
 
-We cannot manually generate a TGT as we do not have and do not have access to the current user's credentials. However, Benjamin Delpy ([@gentilkiwi](https://github.com/gentilkiwi)) in his [Kekeo](https://github.com/gentilkiwi/kekeo/blob/4fbb44ec54ff093ae0fbe4471de19681a8e71a86/kekeo/modules/kuhl_m_tgt.c#L189 -L327) A trick (tgtdeleg) was added that allows you to abuse unconstrained delegation to obtain a local TGT with a session key.
+We cannot manually generate a TGT as we do not have and do not have access to the current user's credentials. However, Benjamin Delpy ([@gentilkiwi](https://github.com/gentilkiwi)) in his [Kekeo](https://github.com/gentilkiwi/kekeo/blob/4fbb44ec54ff093ae0fbe4471de19681a8e71a86/kekeo/modules/kuhl_m_tgt.c#L189) A trick (tgtdeleg) was added that allows you to abuse unconstrained delegation to obtain a local TGT with a session key.
 
 Tgtdeleg abuses the Kerberos GSS-API to obtain available TGTs for the current user without obtaining elevated privileges on the host. This method uses the `AcquireCredentialsHandle` function to obtain the Kerberos security credentials handle for the current user, and calls the `InitializeSecurityContext` function for `HOST/DC.domain.com` using the `ISC_REQ_DELEGATE` flag and the target SPN to prepare the pseudo-delegation context to send to the domain controller. This causes the KRB_AP-REQ in the GSS-API output to include the KRB_CRED in the Authenticator Checksum. The service ticket's session key is then extracted from the local Kerberos cache and used to decrypt the KRB_CRED in the Authenticator to obtain a usable TGT. The Rubeus toolset also incorporates this technique. For details, please refer to “[*Rubeus – Now With More Kekeo*](https://blog.harmj0y.net/redteaming/rubeus-now-with-more-kekeo/#tgtdeleg)”.
 
@@ -27,4 +27,4 @@ KRBUACBypass.exe asktgs
 KRBUACBypass.exe krbscm
 ```
 
-![Animation](/Animation.gif)
+![Animation](/images/Animation.gif)
