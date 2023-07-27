@@ -27,4 +27,4 @@ KRBUACBypass.exe asktgs
 KRBUACBypass.exe krbscm
 ```
 
-![Animation](C:\Users\whoami\Desktop\Animation.gif)
+![Animation](/Animation.gif)
