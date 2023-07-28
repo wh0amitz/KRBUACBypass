@@ -20,7 +20,7 @@ Once you have a service ticket, you can use Kerberos authentication to access Se
 
 ## Let’s see it in action
 
-Now let's take a look at the running effect, as shown in the figure below. First apply for a ticket for the HOST service of the current server through the asktgs function, and then create a system service through krbscm to obtain the SYSTEM permission.
+Now let's take a look at the running effect, as shown in the figure below. First request a ticket for the HOST service of the current server through the asktgs function, and then create a system service through krbscm to gain the SYSTEM privilege.
 
 ```console
 KRBUACBypass.exe asktgs
