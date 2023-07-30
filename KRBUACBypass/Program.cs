@@ -42,7 +42,7 @@ namespace KRBUACBypass
                 h.AdditionalNewLineAfterOption = false;
                 h.MaximumDisplayWidth = 100;
                 h.Heading = "\nKRBUACBypass 1.0.0-beta"; //change header
-                h.Copyright = "Copyright (c) 2023 whoamianony.top"; //change copyright text
+                h.Copyright = "Copyright (c) 2023"; //change copyright text
                 return HelpText.DefaultParsingErrorsHandler(result, h);
             }, e => e);
             Console.WriteLine(helpText);
