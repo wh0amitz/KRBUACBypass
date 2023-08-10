@@ -20,6 +20,10 @@ With this TGT, we can generate our own service ticket, and the feasible operatio
 
 Once you have a service ticket, you can use Kerberos authentication to access Service Control Manager (SCM) Named Pipes or TCP via HOST/HOSTNAME or RPC/HOSTNAME SPN. Note that SCM's Win32 API always uses Negotiate authentication. James Forshaw created a simple POC: [SCMUACBypass.cpp](https://gist.github.com/tyranid/c24cfd1bd141d14d4925043ee7e03c82), through the two APIs HOOK AcquireCredentialsHandle and InitializeSecurityContextW, the name of the authentication package called by SCM (pszPack age ) to Kerberos to enable the SCM to use Kerberos when authenticating locally.
 
+For more details please read:
+- For EN-US: https://whoamianony.top/posts/revisiting-a-uac-bypass-by-abusing-kerberos-tickets/
+- For ZH-CN: https://paper.seebug.org/3003/
+
 ## Let’s see it in action
 
 Now let's take a look at the running effect, as shown in the figure below. First request a ticket for the HOST service of the current server through the asktgs function, and then create a system service through krbscm to gain the SYSTEM privilege.
